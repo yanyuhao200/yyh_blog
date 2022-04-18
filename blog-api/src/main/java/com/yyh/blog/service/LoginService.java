@@ -1,5 +1,6 @@
 package com.yyh.blog.service;
 
+import com.yyh.blog.dao.pojo.SysUser;
 import com.yyh.blog.vo.Result;
 import com.yyh.blog.vo.params.LoginParam;
 import org.apache.ibatis.annotations.Mapper;
@@ -18,4 +19,13 @@ public interface LoginService {
      * @return
      */
     Result login(LoginParam loginParam);
+
+    SysUser checkToken(String token);
+
+    /**
+     * 退出登录
+     * @param token
+     * @return
+     */
+    Result logout(String token);
 }
