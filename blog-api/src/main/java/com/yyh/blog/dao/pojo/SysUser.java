@@ -4,6 +4,10 @@ import lombok.Data;
 
 @Data
 public class SysUser {
+
+    // @TableId(type = IdType.ASSIGN_ID) // 默认id类型
+    // 用户多了 之后 需要分库分表 id就需要用分布式id
+    // @TableId(type = IdType.AUTO) // 数据库自增
     private Long id;
 
     private String account;
