@@ -1,4 +1,4 @@
-package com.yyh.blog.config;
+package com.yyh.blog.controller;
 
 import com.yyh.blog.service.LoginService;
 import com.yyh.blog.vo.Result;

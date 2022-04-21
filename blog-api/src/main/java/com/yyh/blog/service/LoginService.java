@@ -20,6 +20,11 @@ public interface LoginService {
      */
     Result login(LoginParam loginParam);
 
+    /**
+     * 检查token信息
+     * @param token
+     * @return
+     */
     SysUser checkToken(String token);
 
     /**

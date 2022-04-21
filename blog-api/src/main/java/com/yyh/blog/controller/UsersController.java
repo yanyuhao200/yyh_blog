@@ -1,6 +1,5 @@
-package com.yyh.blog.config;
+package com.yyh.blog.controller;
 
-import com.yyh.blog.service.LoginService;
 import com.yyh.blog.service.SysUserService;
 import com.yyh.blog.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +18,8 @@ public class UsersController {
     private SysUserService sysUserService;
 
 
-
     // /users/currentUser
+
     @GetMapping("currentUser")
     public Result currentUser(@RequestHeader("Authorization") String token){
         return sysUserService.findUserByToken(token);

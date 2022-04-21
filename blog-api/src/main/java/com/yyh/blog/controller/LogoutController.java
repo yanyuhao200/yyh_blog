@@ -1,4 +1,4 @@
-package com.yyh.blog.config;
+package com.yyh.blog.controller;
 
 import com.yyh.blog.service.LoginService;
 import com.yyh.blog.vo.Result;
@@ -21,7 +21,7 @@ public class LogoutController {
     private LoginService loginService;
 
     @GetMapping
-    public Result logout(@RequestHeader("Authorization") String token){
+    public Result logout(@RequestHeader("Authorization") String token) {
         return loginService.logout(token);
     }
 }
