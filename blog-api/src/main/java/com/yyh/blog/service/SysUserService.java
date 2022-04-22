@@ -2,8 +2,11 @@ package com.yyh.blog.service;
 
 import com.yyh.blog.dao.pojo.SysUser;
 import com.yyh.blog.vo.Result;
+import com.yyh.blog.vo.UserVo;
 
 public interface SysUserService {
+
+    UserVo findUserVoById(Long id);
 
     SysUser findUserById(Long id);
 

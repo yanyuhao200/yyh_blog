@@ -8,6 +8,8 @@ import com.yyh.blog.service.SysUserService;
 import com.yyh.blog.vo.ErrorCode;
 import com.yyh.blog.vo.LoginUserVo;
 import com.yyh.blog.vo.Result;
+import com.yyh.blog.vo.UserVo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,20 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Autowired
     private LoginService loginService;
+
+    @Override
+    public UserVo findUserVoById(Long id) {
+        SysUser sysUser = sysUserMapper.selectById(id);
+        if (sysUser == null) {
+            sysUser = new SysUser();
+            sysUser.setId(1L);
+            sysUser.setAvatar("/static/img/logo.b3a48c0.png");
+            sysUser.setNickname("yyh");
+        }
+        UserVo userVo = new UserVo();
+        BeanUtils.copyProperties(sysUser,userVo);
+        return userVo;
+    }
 
     @Override
     public SysUser findUserById(Long id) {
