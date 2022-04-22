@@ -7,10 +7,7 @@ import com.yyh.blog.dao.mapper.ArticleBodyMapper;
 import com.yyh.blog.dao.mapper.ArticleMapper;
 import com.yyh.blog.dao.pojo.Article;
 import com.yyh.blog.dao.pojo.ArticleBody;
-import com.yyh.blog.service.ArticleService;
-import com.yyh.blog.service.CategoryService;
-import com.yyh.blog.service.SysUserService;
-import com.yyh.blog.service.TagService;
+import com.yyh.blog.service.*;
 import com.yyh.blog.vo.ArticleBodyVo;
 import com.yyh.blog.vo.ArticleVo;
 import com.yyh.blog.vo.Result;
@@ -101,6 +98,10 @@ public class ArticleServiceImpl implements ArticleService {
      * @param articleId
      * @return
      */
+
+    @Autowired
+    private ThreadService threadService;
+
     @Override
     public Result findArticleById(Long articleId) {
         /**
@@ -109,6 +110,11 @@ public class ArticleServiceImpl implements ArticleService {
          */
         Article article = articleMapper.selectById(articleId);
         ArticleVo articleVo = copy(article,true,true,true,true);
+        // 查看完文章 新增阅读数
+        // 查看完文章之后 本应该直接返回 但此时做了一个更新操作 更新时加写锁 会阻塞其他读操作 性能比较低
+        // 更新 增加了此次接口的耗时 如果更新一旦出问题 不能查看文章操作
+        // 线程池 可以把更新扔到线程池中去 这样就不影响主线程的工作了
+        threadService.updateArticleViewCount(articleMapper,article);
         return Result.success(articleVo);
     }
 

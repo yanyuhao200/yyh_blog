@@ -18,9 +18,8 @@ public class ArticleVo {
     private int viewCounts;
 
     private int weight;
-    /**
-     * 创建时间
-     */
+
+    // 创建时间
     private String createDate;
 
     private String author;
