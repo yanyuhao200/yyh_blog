@@ -1,6 +1,7 @@
 package com.yyh.blog.service;
 
 import com.yyh.blog.vo.Result;
+import com.yyh.blog.vo.params.CommentParam;
 
 /**
  * @Author: yyh
@@ -15,4 +16,6 @@ public interface CommentsService {
      * @return
      */
     Result commentsByArticleId(Long id);
+
+    Result comment(CommentParam commentParam);
 }

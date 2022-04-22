@@ -3,11 +3,14 @@ package com.yyh.blog.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.yyh.blog.dao.mapper.CommentsMapper;
 import com.yyh.blog.dao.pojo.Comment;
+import com.yyh.blog.dao.pojo.SysUser;
 import com.yyh.blog.service.CommentsService;
 import com.yyh.blog.service.SysUserService;
+import com.yyh.blog.utils.UserThreadLocal;
 import com.yyh.blog.vo.CommentVo;
 import com.yyh.blog.vo.Result;
 import com.yyh.blog.vo.UserVo;
+import com.yyh.blog.vo.params.CommentParam;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +32,7 @@ public class CommentsServiceImpl implements CommentsService {
     @Autowired
     private SysUserService sysUserService;
 
+
     @Override
     public Result commentsByArticleId(Long id) {
         /**
@@ -43,6 +47,27 @@ public class CommentsServiceImpl implements CommentsService {
         List<Comment> comments = commentsMapper.selectList(queryWrapper);
         List<CommentVo> commentVoList = copyList(comments);
         return Result.success(commentVoList);
+    }
+
+    @Override
+    public Result comment(CommentParam commentParam) {
+        SysUser sysUser = UserThreadLocal.get();
+        Comment comment = new Comment();
+        comment.setArticleId(commentParam.getArticleId());
+        comment.setAuthorId(sysUser.getId());
+        comment.setContent(commentParam.getContent());
+        comment.setCreateDate(System.currentTimeMillis());
+        Long parent = commentParam.getParent();
+        if (parent == null || parent == 0) {
+            comment.setLevel(1);
+        } else {
+            comment.setLevel(2);
+        }
+        comment.setParentId(parent == null ? 0 : parent);
+        Long toUserId = commentParam.getToUserId();
+        comment.setToUid(toUserId == null ? 0 : toUserId);
+        this.commentsMapper.insert(comment);
+        return Result.success(null);
     }
 
     private List<CommentVo> copyList(List<Comment> comments) {
