@@ -2,6 +2,7 @@ package com.yyh.blog.controller;
 
 import com.yyh.blog.service.ArticleService;
 import com.yyh.blog.vo.Result;
+import com.yyh.blog.vo.params.ArticleParam;
 import com.yyh.blog.vo.params.PageParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -48,8 +49,22 @@ public class ArticleController {
         return articleService.listArchives();
     }
 
+    /**
+     * 根据id 查询文章
+     * @param articleId
+     * @return
+     */
     @PostMapping("view/{id}")
     public Result findArticleById(@PathVariable("id") Long articleId){
         return articleService.findArticleById(articleId);
     }
+
+    /**
+     * 文章发布服务
+     */
+    @PostMapping("publish")
+    public Result publish(@RequestBody ArticleParam articleParam){
+        return articleService.publish(articleParam);
+    }
+
 }
