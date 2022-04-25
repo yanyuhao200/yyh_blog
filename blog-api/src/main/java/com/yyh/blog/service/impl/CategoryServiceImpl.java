@@ -35,9 +35,24 @@ public class CategoryServiceImpl implements CategoryService {
     // 类别查询
     @Override
     public Result findAll() {
-        List<Category> categories = categoryMapper.selectList(new LambdaQueryWrapper<>());
+        LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.select(Category::getId,Category::getCategoryName);
+        List<Category> categories = categoryMapper.selectList(queryWrapper);
         // Category是数据库的对象 需要显示的是和页面交互的对象 Category
         return Result.success(copyList(categories));
+    }
+
+    @Override
+    public Result findAllDetail() {
+        LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
+        List<Category> categories = categoryMapper.selectList(queryWrapper);
+        return Result.success(copyList(categories ));
+    }
+
+    @Override
+    public Result categoryDetailById(Long id) {
+        Category category = categoryMapper.selectById(id);
+        return Result.success(copy(category));
     }
 
     public CategoryVo copy(Category category){

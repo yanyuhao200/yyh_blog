@@ -61,7 +61,24 @@ public class TagServiceImpl implements TagService {
     // 查询所有标签
     @Override
     public Result findAll() {
-        List<Tag> tagList = tagMapper.selectList(new LambdaQueryWrapper<>());
+        // 用多少查多少
+        LambdaQueryWrapper<Tag> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.select(Tag::getId,Tag::getTagName);
+        List<Tag> tagList = tagMapper.selectList(queryWrapper);
         return Result.success(copyList(tagList));
+    }
+
+    @Override
+    public Result findAllDetail() {
+        LambdaQueryWrapper<Tag> queryWrapper = new LambdaQueryWrapper<>();
+        List<Tag> tagList = tagMapper.selectList(queryWrapper);
+        return Result.success(copyList(tagList));
+    }
+
+    // 标签列表
+    @Override
+    public Result findAllDetailById(Long id) {
+        Tag tag = tagMapper.selectById(id);
+        return Result.success(copy(tag));
     }
 }
