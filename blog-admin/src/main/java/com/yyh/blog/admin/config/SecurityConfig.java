@@ -5,32 +5,19 @@ package com.yyh.blog.admin.config;
  * @Date: 2022/04/25 14:43
  */
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder(){
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -39,10 +26,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         String yyh = new BCryptPasswordEncoder().encode("admin");
         System.out.println(yyh);
     }
+
     @Override
     public void configure(WebSecurity web) throws Exception {
         super.configure(web);
     }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
@@ -70,6 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic()
                 .and()
                 .csrf().disable() //csrf关闭 如果自定义登录 需要关闭
-                .headers().frameOptions().sameOrigin(); // 支持iframe页面嵌套
+                .headers().frameOptions().sameOrigin();
     }
 }
+

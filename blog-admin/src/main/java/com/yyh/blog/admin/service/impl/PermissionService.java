@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yyh.blog.admin.mapper.PermissionMapper;
 import com.yyh.blog.admin.model.param.PageParam;
 import com.yyh.blog.admin.pojo.Permission;
-import com.yyh.blog.admin.service.PermissionService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,12 +17,12 @@ import vo.Result;
  */
 
 @Service
-public class PermissionServiceImpl implements PermissionService {
+public class PermissionService {
 
     @Autowired
     private PermissionMapper permissionMapper;
 
-    @Override
+
     public Result listPermission(PageParam pageParam) {
         /**
          * 要的数据 管理台 表的所有字段 Permission
@@ -43,19 +42,16 @@ public class PermissionServiceImpl implements PermissionService {
         return Result.success(pageResult);
     }
 
-    @Override
     public Result add(Permission permission) {
         this.permissionMapper.insert(permission);
         return Result.success(null);
     }
 
-    @Override
     public Result update(Permission permission) {
         this.permissionMapper.updateById(permission);
         return Result.success(null);
     }
 
-    @Override
     public Result delete(Long id) {
         this.permissionMapper.deleteById(id);
         return Result.success(null);

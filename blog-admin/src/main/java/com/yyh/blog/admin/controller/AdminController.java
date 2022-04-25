@@ -2,7 +2,7 @@ package com.yyh.blog.admin.controller;
 
 import com.yyh.blog.admin.model.param.PageParam;
 import com.yyh.blog.admin.pojo.Permission;
-import com.yyh.blog.admin.service.PermissionService;
+import com.yyh.blog.admin.service.impl.PermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import vo.Result;
