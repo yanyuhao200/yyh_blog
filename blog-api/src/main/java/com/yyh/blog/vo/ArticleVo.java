@@ -13,7 +13,7 @@ public class ArticleVo {
     // @JsonSerialize(using = ToStringSerializer.class)
     // private Long id;
 
-    // 使用了缓存优化处理后 redis给前端返回的id为long类型 还是会产生精度损失问题 所以把id改为String类型大的
+    // 使用了缓存优化处理后 redis给前端返回的id为long类型 还是会产生精度损失问题 所以把id改为String类型的
     private String  id;
 
     private String title;
